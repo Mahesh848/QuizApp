@@ -1,1 +1,7 @@
+body, h1, p {
+    margin: 0;
+    padding: 0;
+}
+
+@import "~bootstrap/scss/bootstrap";
 @import '/styles/_entry.scss';
