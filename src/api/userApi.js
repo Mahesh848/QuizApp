@@ -6,7 +6,7 @@ export const  saveUser = (user) => {
 
 export const matchUser = (email, password) => {
     const user = users.filter(user => {
-        user.password === password && user.email === email
+        return user.password === password && user.email === email
     })
     return user != null
 }
