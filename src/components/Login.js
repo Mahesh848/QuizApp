@@ -1,13 +1,11 @@
 import React from 'react'
 import {Form, Button} from 'react-bootstrap'
-import {saveUser} from '../api/userApi'
+import {matchUser} from '../api/userApi'
 
-class Signup extends React.Component {
+class Login extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            firstname: '',
-            lastname: '',
             email: '',
             password: ''
         }
@@ -16,27 +14,21 @@ class Signup extends React.Component {
     }
 
     handleChange(event) {
-        const {name, value} = event.target
-        this.setState({[name]: value})
+       const {name, value} = event.target
+       this.setState({[name]: value})
     }
 
     handleSubmit(event) {
         event.preventDefault()
-        saveUser(this.state)
+        if (matchUser(this.state.email, this.state.password)) {
+            console.log("LoggedIn")
+        }
     }
 
     render() {
         return(
-            <div className="signup">
+            <div className="login">
                 <Form onSubmit={this.handleSubmit}>
-                    <Form.Group controlId="first-name">
-                        <Form.Label>First Name</Form.Label>
-                        <Form.Control name="firstname" type="text" placeholder="First Name" onChange={this.handleChange} required/>
-                    </Form.Group>
-                    <Form.Group controlId="last-name">
-                        <Form.Label>Last Name</Form.Label>
-                        <Form.Control name="lastname" type="text" placeholder="Last Name" onChange={this.handleChange} required/>
-                    </Form.Group>
                     <Form.Group controlId="email">
                         <Form.Label>Email</Form.Label>
                         <Form.Control name="email" type="email" placeholder="Enter Email" onChange={this.handleChange} required/>
@@ -53,4 +45,4 @@ class Signup extends React.Component {
         )
     }
 }
-export default Signup
+export default Login
