@@ -1,15 +1,19 @@
 import React from 'react'
-import Logo from '../assets/logo.jpg'
 import Signup from './Signup'
 import {Nav} from 'react-bootstrap'
-import {Switch, Route, Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import Login from './Login'
+import Header from './Header'
 
 class Entry extends React.Component {
     constructor(props) {
         super(props)
+        if (this.props.location.pathname === '/') {
+            this.props.history.push("/login")
+        }
+        let key = this.props.location.pathname === '/login' ? '1' : '2'    
         this.state = {
-            key: '1'
+            key: key
         }
         this.handleSelect = this.handleSelect.bind(this)
     }
@@ -18,15 +22,18 @@ class Entry extends React.Component {
         this.setState({key: key})
     }
 
+    some = () => {
+        if (this.state.key === '1') {
+            return <Login history={this.props.history}/>
+        } else {
+            return <Signup />
+        }
+    }
+
     render() {
         return (
             <div className="login-signup-page">
-                <header className="header">
-                    <div className="logo">
-                        <img src={Logo} alt="logo.jpg"/>
-                    </div>
-                    <h1>Quiz App</h1>
-                </header>
+                <Header props={this.props}/>
                 <div className="login-signup">
                     <Nav justify variant="tabs" activeKey={this.state.key} onSelect={this.handleSelect}>
                         <Nav.Item id="login">
@@ -36,10 +43,7 @@ class Entry extends React.Component {
                             <Nav.Link as={Link} eventKey="2" to="/signup"> SignUp </Nav.Link>
                         </Nav.Item>
                     </Nav>
-                    <Switch>
-                        <Route path="/signup" exact component={Signup}/>
-                        <Route path="/login" exact component={Login}/>
-                    </Switch>
+                    {this.some()}
                 </div>
             </div>
         )

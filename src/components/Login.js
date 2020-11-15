@@ -9,6 +9,7 @@ class Login extends React.Component {
             email: '',
             password: ''
         }
+        console.log(this.props)
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -21,7 +22,7 @@ class Login extends React.Component {
     handleSubmit(event) {
         event.preventDefault()
         if (matchUser(this.state.email, this.state.password)) {
-            console.log("LoggedIn")
+            this.props.history.push("/home");
         }
     }
 
