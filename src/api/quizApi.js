@@ -28,3 +28,9 @@ export const getQuizzes = () => {
         }
     })
 }
+
+export const getQuiz = (id) => {
+    return quizzes.filter(quiz => {
+        return quiz.id === id
+    })
+}

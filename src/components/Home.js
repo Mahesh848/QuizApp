@@ -9,6 +9,11 @@ class Home extends React.Component {
         this.state = {
             quizzes: getQuizzes()
         }
+        this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleClick = (id) => {
+        this.props.history.push(`/quiz/${id}`)
     }
 
     render() {
@@ -18,7 +23,7 @@ class Home extends React.Component {
                 <div className="quiz-container">
                     {
                         this.state.quizzes.map(quiz => (
-                            <QuizTemplate key={quiz.id} quiz={quiz}/>
+                            <QuizTemplate key={quiz.id} quiz={quiz} clickFn={this.handleClick}/>
                         ))
                     }
                 </div>
