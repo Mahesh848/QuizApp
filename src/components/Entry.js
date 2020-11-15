@@ -33,7 +33,7 @@ class Entry extends React.Component {
     render() {
         return (
             <div className="login-signup-page">
-                <Header props={this.props}/>
+                <Header />
                 <div className="login-signup">
                     <Nav justify variant="tabs" activeKey={this.state.key} onSelect={this.handleSelect}>
                         <Nav.Item id="login">

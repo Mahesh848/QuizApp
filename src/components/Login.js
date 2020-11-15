@@ -9,7 +9,6 @@ class Login extends React.Component {
             email: '',
             password: ''
         }
-        console.log(this.props)
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }

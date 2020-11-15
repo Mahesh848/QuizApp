@@ -1,25 +1,27 @@
 import React from 'react'
-import {Card, Button} from 'react-bootstrap'
+import Quiz from './Quiz'
+import {getQuizzes} from '../api/quizApi'
+import Header from './Header'
 
 class Home extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            quizzes: getQuizzes()
+        }
     }
 
     render() {
         return(
             <div className="home-page">
-                <Card style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src="holder.js/100px180" />
-                    <Card.Body>
-                        <Card.Title>Card Title</Card.Title>
-                        <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
-                        </Card.Text>
-                        <Button variant="primary">Go somewhere</Button>
-                    </Card.Body>
-                </Card>
+                <Header />
+                <div className="quiz-container">
+                    {
+                        this.state.quizzes.map(quiz => (
+                            <Quiz key={quiz.id} quiz={quiz}/>
+                        ))
+                    }
+                </div>
             </div>
         )
     }
