@@ -1,4 +1,5 @@
-const users = []
+import { USERS } from "./users";
+const users = USERS
 
 export const  saveUser = (user) => {
     users.push(user)

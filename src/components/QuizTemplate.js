@@ -1,7 +1,7 @@
 import React from 'react'
 import {Card, Button} from 'react-bootstrap'
 
-function Quiz(props) {
+function QuizTemplate(props) {
     return (
         <div className='quiz'>
             <Card style={{width: '18rem' }}>
@@ -16,4 +16,4 @@ function Quiz(props) {
         </div>
     )
 }
-export default Quiz
+export default QuizTemplate

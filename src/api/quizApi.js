@@ -1,8 +1,11 @@
+import { dataStructures } from "./dataStructure"
+
 const quizzes = [
     {
         id: 1,
         title: 'Data Structures',
-        description: 'Qestions on Arrays, LinkedList, Stacks, Queues, Graphs'
+        description: 'Qestions on Arrays, LinkedList, Stacks, Queues, Graphs',
+        questions: dataStructures
     },
     {
         id: 2,
@@ -17,5 +20,11 @@ const quizzes = [
 ]
 
 export const getQuizzes = () => {
-    return quizzes
+    return quizzes.map(quiz => {
+        return {
+            id: quiz.id,
+            title: quiz.title,
+            description: quiz.description
+        }
+    })
 }

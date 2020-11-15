@@ -1,5 +1,5 @@
 import React from 'react'
-import Quiz from './Quiz'
+import QuizTemplate from './QuizTemplate'
 import {getQuizzes} from '../api/quizApi'
 import Header from './Header'
 
@@ -18,7 +18,7 @@ class Home extends React.Component {
                 <div className="quiz-container">
                     {
                         this.state.quizzes.map(quiz => (
-                            <Quiz key={quiz.id} quiz={quiz}/>
+                            <QuizTemplate key={quiz.id} quiz={quiz}/>
                         ))
                     }
                 </div>
