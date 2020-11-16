@@ -5,7 +5,8 @@ const quizzes = [
         id: 1,
         title: 'Data Structures',
         description: 'Qestions on Arrays, LinkedList, Stacks, Queues, Graphs',
-        questions: dataStructures
+        questions: dataStructures,
+        time: 1
     },
     {
         id: 2,
