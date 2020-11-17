@@ -4,6 +4,7 @@ import {getQuiz} from '../api/quizApi'
 import Question from './Question'
 import { Button } from 'react-bootstrap'
 import AlertBox from './AlertBox'
+import QuestionPalette from './QuestionPalette'
 
 class Quiz extends React.Component {
     constructor(props) {
@@ -44,8 +45,8 @@ class Quiz extends React.Component {
 
     setQuestion(id) {
         let question = this.state.quiz.questions[id]
-        this.setState({currentQustionId: id, currentQuestion: question}, () => {
-            console.log(this.state.currentQuestion)
+        this.setState({currentQuestionId: id, currentQuestion: question}, () => {
+            console.log(this.state)
         })
     }
 
@@ -147,7 +148,7 @@ class Quiz extends React.Component {
                         <div className="alert-box"><AlertBox detailes={{show: this.state.showQuizEndAlert, closeAlert: this.closeAlert, text: "You have visited all questions"}}/></div>}
                     </div>
                     <div className="question-palette">
-
+                            <QuestionPalette questions={{answers: this.state.answers, markedQuestions: this.state.markedQuestions, onClickFn: this.setQuestion}}/>
                     </div>
                 </div>
             </div>
