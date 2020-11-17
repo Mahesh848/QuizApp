@@ -1,3 +1,26 @@
-.quiz {
-    margin-right: 20px;
+.quiz-test {
+    .quiz-body {
+        display: flex;
+        width: 90%;
+        margin: auto;
+        margin-top:50px;
+
+        .quiz-question {
+            width: 70%;
+        }
+
+        .question-options {
+            margin-bottom: 80px;
+        }
+    }
+    .acion-buttons {
+        display: flex;
+    }
+
+    .buttons-move {
+        width: 90%;
+        Button {
+            margin-right: 20px;
+        }
+    }
 }

@@ -1,26 +1,41 @@
 import React from 'react'
 import QuizHeader from './QuizHeader'
 import {getQuiz} from '../api/quizApi'
+import Question from './Question'
+import { Button } from 'react-bootstrap'
 
 class Quiz extends React.Component {
     constructor(props) {
         super(props)
+        let quiz = getQuiz(parseInt(this.props.match.params.id))[0]
+        let time = this.convertMinsToTime(quiz.time)
+
         this.state = {
-            quiz: {},
-            timeLeft: {}
+            quiz: quiz,
+            timeLeft: time,
+            currentQuestionId: 0,
+            currentQuestion: quiz.questions[0],
+            answers: []
         }
         this.timer = 0
         this.convertMinsToTime = this.convertMinsToTime.bind(this)
         this.countDown = this.countDown.bind(this)
+        this.setQuestion = this.setQuestion.bind(this)
+        this.onSelectOption = this.onSelectOption.bind(this)
     }
 
     componentDidMount() {
-        let quiz = getQuiz(parseInt(this.props.match.params.id))[0]
-        let time = this.convertMinsToTime(quiz.time)
-
-        this.setState({quiz: quiz, timeLeft: time})
-
+        const answers = this.state.quiz.questions.map(question => {
+            return -1
+        });
         this.timer = setInterval(this.countDown, 1000)
+    }
+
+    setQuestion(id) {
+        let question = this.state.quiz.questions[id]
+        this.setState({currentQustionId: id, currentQuestion: question}, () => {
+            console.log(this.state.currentQuestion)
+        })
     }
 
     convertMinsToTime(minutes) {
@@ -67,10 +82,35 @@ class Quiz extends React.Component {
         this.setState({timeLeft: time})
     }
 
+    onSelectOption(event) {
+        const answer = event.target.value
+        let allAnswers = this.state.answers
+        allAnswers[this.state.currentQuestionId] = answer
+        this.setState({answers: allAnswers})
+    }
+
     render() {
         return (
             <div className="quiz-test">
                 <QuizHeader detailes={{'title': this.state.quiz.title, 'time': this.state.timeLeft}}/>
+                <div className="quiz-body">
+                    <div className="quiz-question">
+                        <Question question={{question: this.state.currentQuestion, id: this.state.currentQuestionId, onSelectFn: this.onSelectOption}}/>
+                        <div className="acion-buttons">
+                            <div className="buttons-move">
+                                <Button variant="primary">Mark</Button>
+                                <Button variant="secondary">Clear Response</Button>
+                                <Button variant="outline-primary">Next </Button>
+                            </div>
+                            <div className="buttons-end">
+                                <Button variant="danger">End Test</Button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="question-palette">
+
+                    </div>
+                </div>
             </div>
         )
     }
