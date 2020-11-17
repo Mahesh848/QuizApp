@@ -3,6 +3,7 @@ import QuizHeader from './QuizHeader'
 import {getQuiz} from '../api/quizApi'
 import Question from './Question'
 import { Button } from 'react-bootstrap'
+import AlertBox from './AlertBox'
 
 class Quiz extends React.Component {
     constructor(props) {
@@ -15,7 +16,8 @@ class Quiz extends React.Component {
             timeLeft: time,
             currentQuestionId: 0,
             currentQuestion: quiz.questions[0],
-            answers: []
+            answers: [],
+            showQuizEndAlert: false
         }
         this.timer = 0
         this.convertMinsToTime = this.convertMinsToTime.bind(this)
@@ -23,11 +25,13 @@ class Quiz extends React.Component {
         this.setQuestion = this.setQuestion.bind(this)
         this.onSelectOption = this.onSelectOption.bind(this)
         this.clearAnswer = this.clearAnswer.bind(this)
+        this.nextQuestion = this.nextQuestion.bind(this)
+        this.closeAlert = this.closeAlert.bind(this)
     }
 
     componentDidMount() {
         const answers = this.state.quiz.questions.map(question => {
-            return 0
+            return -1
         });
         this.setState({answers: answers})
         this.timer = setInterval(this.countDown, 1000)
@@ -97,6 +101,20 @@ class Quiz extends React.Component {
         this.setState({answers: allAnswers})
     }
 
+    nextQuestion() {
+        let currentuQuestionId = parseInt(this.state.currentQuestionId) + 1
+        if (currentuQuestionId < this.state.quiz.questions.length) {
+            let currentQuestion = this.state.quiz.questions[currentuQuestionId]
+            this.setState({currentQuestionId: currentuQuestionId, currentQuestion: currentQuestion})
+        } else {
+            this.setState({showQuizEndAlert: true})
+        }
+    }
+
+    closeAlert() {
+        this.setState({showQuizEndAlert: false})
+    }
+
     render() {
         return (
             <div className="quiz-test">
@@ -108,12 +126,14 @@ class Quiz extends React.Component {
                             <div className="buttons-move">
                                 <Button variant="primary">Mark</Button>
                                 <Button variant="secondary" onClick={this.clearAnswer}>Clear Response</Button>
-                                <Button variant="outline-primary">Next </Button>
+                                <Button variant="outline-primary" onClick={this.nextQuestion}>Next </Button>
                             </div>
                             <div className="buttons-end">
                                 <Button variant="danger">End Test</Button>
                             </div>
                         </div>
+                        {this.state.showQuizEndAlert && 
+                        <div className="alert-box"><AlertBox detailes={{show: this.state.showQuizEndAlert, closeAlert: this.closeAlert, text: "You have visited all questions"}}/></div>}
                     </div>
                     <div className="question-palette">
 
