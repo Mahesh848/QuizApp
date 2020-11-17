@@ -22,12 +22,14 @@ class Quiz extends React.Component {
         this.countDown = this.countDown.bind(this)
         this.setQuestion = this.setQuestion.bind(this)
         this.onSelectOption = this.onSelectOption.bind(this)
+        this.clearAnswer = this.clearAnswer.bind(this)
     }
 
     componentDidMount() {
         const answers = this.state.quiz.questions.map(question => {
-            return -1
+            return 0
         });
+        this.setState({answers: answers})
         this.timer = setInterval(this.countDown, 1000)
     }
 
@@ -89,17 +91,23 @@ class Quiz extends React.Component {
         this.setState({answers: allAnswers})
     }
 
+    clearAnswer() {
+        let allAnswers = this.state.answers
+        allAnswers[this.state.currentQuestionId] = -1
+        this.setState({answers: allAnswers})
+    }
+
     render() {
         return (
             <div className="quiz-test">
                 <QuizHeader detailes={{'title': this.state.quiz.title, 'time': this.state.timeLeft}}/>
                 <div className="quiz-body">
                     <div className="quiz-question">
-                        <Question question={{question: this.state.currentQuestion, id: this.state.currentQuestionId, onSelectFn: this.onSelectOption}}/>
+                        <Question question={{question: this.state.currentQuestion, id: this.state.currentQuestionId, onSelectFn: this.onSelectOption, responses: this.state.answers}}/>
                         <div className="acion-buttons">
                             <div className="buttons-move">
                                 <Button variant="primary">Mark</Button>
-                                <Button variant="secondary">Clear Response</Button>
+                                <Button variant="secondary" onClick={this.clearAnswer}>Clear Response</Button>
                                 <Button variant="outline-primary">Next </Button>
                             </div>
                             <div className="buttons-end">
