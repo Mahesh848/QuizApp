@@ -5,7 +5,7 @@ function Question(props) {
     return (
         <div className="question-options">
             <div className="question">
-                {props.question.question.question}
+                {parseInt(props.question.id)+1 + ". "}{props.question.question.question}
             </div>
             <div className="options">
                 <Form.Group>

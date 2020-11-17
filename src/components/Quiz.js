@@ -17,6 +17,7 @@ class Quiz extends React.Component {
             currentQuestionId: 0,
             currentQuestion: quiz.questions[0],
             answers: [],
+            markedQuestions: [],
             showQuizEndAlert: false
         }
         this.timer = 0
@@ -27,13 +28,17 @@ class Quiz extends React.Component {
         this.clearAnswer = this.clearAnswer.bind(this)
         this.nextQuestion = this.nextQuestion.bind(this)
         this.closeAlert = this.closeAlert.bind(this)
+        this.markTheQuestion = this.markTheQuestion.bind(this)
     }
 
     componentDidMount() {
         const answers = this.state.quiz.questions.map(question => {
             return -1
         });
-        this.setState({answers: answers})
+        const markedQuestions = this.state.quiz.questions.map(question => {
+            return false
+        })
+        this.setState({answers: answers, markedQuestions: markedQuestions})
         this.timer = setInterval(this.countDown, 1000)
     }
 
@@ -111,6 +116,12 @@ class Quiz extends React.Component {
         }
     }
 
+    markTheQuestion() {
+        let markedQuestions = this.state.markedQuestions
+        markedQuestions[this.state.currentQuestionId] = true
+        this.setState({markedQuestions: markedQuestions})
+    }
+
     closeAlert() {
         this.setState({showQuizEndAlert: false})
     }
@@ -124,7 +135,7 @@ class Quiz extends React.Component {
                         <Question question={{question: this.state.currentQuestion, id: this.state.currentQuestionId, onSelectFn: this.onSelectOption, responses: this.state.answers}}/>
                         <div className="acion-buttons">
                             <div className="buttons-move">
-                                <Button variant="primary">Mark</Button>
+                                <Button variant="primary" onClick={this.markTheQuestion}>Mark</Button>
                                 <Button variant="secondary" onClick={this.clearAnswer}>Clear Response</Button>
                                 <Button variant="outline-primary" onClick={this.nextQuestion}>Next </Button>
                             </div>
