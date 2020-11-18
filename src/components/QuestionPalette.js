@@ -12,8 +12,8 @@ function QuestionPalette(props) {
             {
                 props.questions.answers.map((answer, index) => {
                     return <span key={index} className="question-button">
-                                <Button onClick={() => {props.questions.onClickFn(index)}}>{index+1 < 10 ? "0"+(index+1) : (index+1)}</Button>
-                                {printBreak(index+1)}
+                                {<Button variant={props.questions.markedQuestions[index] ? "primary" : answer !== -1 ? "success" : "outline-dark"}
+                                onClick={() => {props.questions.onClickFn(index)}}>{index+1 < 10 ? "0"+(index+1) : (index+1)}</Button>}
                             </span>
                 })
             }

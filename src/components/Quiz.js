@@ -5,6 +5,7 @@ import Question from './Question'
 import { Button } from 'react-bootstrap'
 import AlertBox from './AlertBox'
 import QuestionPalette from './QuestionPalette'
+import {Link} from 'react-router-dom'
 
 class Quiz extends React.Component {
     constructor(props) {
@@ -19,7 +20,8 @@ class Quiz extends React.Component {
             currentQuestion: quiz.questions[0],
             answers: [],
             markedQuestions: [],
-            showQuizEndAlert: false
+            showQuizEndAlert: false,
+            isQuizEnded: false
         }
         this.timer = 0
         this.convertMinsToTime = this.convertMinsToTime.bind(this)
@@ -83,6 +85,7 @@ class Quiz extends React.Component {
                     hrs -= 1
                 } else {
                     clearInterval(this.timer)
+                    this.setState({isQuizEnded: true})
                 }
             }
         }
@@ -119,7 +122,7 @@ class Quiz extends React.Component {
 
     markTheQuestion() {
         let markedQuestions = this.state.markedQuestions
-        markedQuestions[this.state.currentQuestionId] = true
+        markedQuestions[this.state.currentQuestionId] = !markedQuestions[this.state.currentQuestionId]
         this.setState({markedQuestions: markedQuestions})
     }
 
@@ -127,16 +130,26 @@ class Quiz extends React.Component {
         this.setState({showQuizEndAlert: false})
     }
 
+    calculateScore() {
+        let score = 0
+        this.state.quiz.questions.map((question, index) => {
+            if (question.answer === this.state.answers[index]) {
+                score += 1
+            }
+        })
+        return score
+    }
+
     render() {
         return (
             <div className="quiz-test">
                 <QuizHeader detailes={{'title': this.state.quiz.title, 'time': this.state.timeLeft}}/>
-                <div className="quiz-body">
+                {!this.state.isQuizEnded ? <div className="quiz-body">
                     <div className="quiz-question">
                         <Question question={{question: this.state.currentQuestion, id: this.state.currentQuestionId, onSelectFn: this.onSelectOption, responses: this.state.answers}}/>
                         <div className="acion-buttons">
                             <div className="buttons-move">
-                                <Button variant="primary" onClick={this.markTheQuestion}>Mark</Button>
+                                <Button variant="primary" onClick={this.markTheQuestion}>{this.state.markedQuestions[this.state.currentQuestionId] ? "Un Mark" : "Mark"}</Button>
                                 <Button variant="secondary" onClick={this.clearAnswer}>Clear Response</Button>
                                 <Button variant="outline-primary" onClick={this.nextQuestion}>Next </Button>
                             </div>
@@ -150,7 +163,11 @@ class Quiz extends React.Component {
                     <div className="question-palette">
                             <QuestionPalette questions={{answers: this.state.answers, markedQuestions: this.state.markedQuestions, onClickFn: this.setQuestion}}/>
                     </div>
-                </div>
+                </div> : 
+                <div className="quiz-end">
+                    <h1>Your Score: {" " + this.calculateScore()}</h1>
+                    <Link to="/home">Go To DashBoard</Link>
+                </div>}
             </div>
         )
     }
