@@ -20,8 +20,9 @@ class Quiz extends React.Component {
             currentQuestion: quiz.questions[0],
             answers: [],
             markedQuestions: [],
-            showQuizEndAlert: false,
-            isQuizEnded: false
+            showAlert: false,
+            isQuizEnded: false,
+            clickedSubmtQuiz: false
         }
         this.timer = 0
         this.convertMinsToTime = this.convertMinsToTime.bind(this)
@@ -32,6 +33,8 @@ class Quiz extends React.Component {
         this.nextQuestion = this.nextQuestion.bind(this)
         this.closeAlert = this.closeAlert.bind(this)
         this.markTheQuestion = this.markTheQuestion.bind(this)
+        this.handleOk = this.handleOk.bind(this)
+        this.submitQuiz = this.submitQuiz.bind(this)
     }
 
     componentDidMount() {
@@ -116,7 +119,7 @@ class Quiz extends React.Component {
             let currentQuestion = this.state.quiz.questions[currentuQuestionId]
             this.setState({currentQuestionId: currentuQuestionId, currentQuestion: currentQuestion})
         } else {
-            this.setState({showQuizEndAlert: true})
+            this.setState({showAlert: true})
         }
     }
 
@@ -127,7 +130,11 @@ class Quiz extends React.Component {
     }
 
     closeAlert() {
-        this.setState({showQuizEndAlert: false})
+        this.setState({showAlert: false, clickedSubmtQuiz: false})
+    }
+
+    handleOk() {
+        this.setState({isQuizEnded: true})
     }
 
     calculateScore() {
@@ -138,6 +145,10 @@ class Quiz extends React.Component {
             }
         })
         return score
+    }
+
+    submitQuiz() {
+        this.setState({clickedSubmtQuiz: true})
     }
 
     render() {
@@ -154,14 +165,17 @@ class Quiz extends React.Component {
                                 <Button variant="outline-primary" onClick={this.nextQuestion}>Next </Button>
                             </div>
                             <div className="buttons-end">
-                                <Button variant="danger">End Test</Button>
+                                <Button variant="danger" onClick={this.submitQuiz}>Submit</Button>
                             </div>
                         </div>
-                        {this.state.showQuizEndAlert && 
-                        <div className="alert-box"><AlertBox detailes={{show: this.state.showQuizEndAlert, closeAlert: this.closeAlert, text: "You have visited all questions"}}/></div>}
+                        {this.state.showAlert && 
+                        <div className="alert-box"><AlertBox detailes={{show: this.state.showAlert, handleOk: this.closeAlert, text: "There is no next question"}}/></div>}
+                        {this.state.clickedSubmtQuiz &&
+                        <div className="alert-box"><AlertBox detailes={{show: this.state.clickedSubmtQuiz, handleOk: this.handleOk, handleClose: this.closeAlert, text: "Are you sure?"}}/></div>
+                        }
                     </div>
                     <div className="question-palette">
-                            <QuestionPalette questions={{answers: this.state.answers, markedQuestions: this.state.markedQuestions, onClickFn: this.setQuestion}}/>
+                        <QuestionPalette questions={{answers: this.state.answers, markedQuestions: this.state.markedQuestions, onClickFn: this.setQuestion}}/>
                     </div>
                 </div> : 
                 <div className="quiz-end">
