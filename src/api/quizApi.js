@@ -1,4 +1,6 @@
 import { dataStructures } from "./dataStructure"
+import { Algorithms } from './algorithms'
+import { ComputerNetworks } from './computerNetworks'
 
 const quizzes = [
     {
@@ -6,17 +8,21 @@ const quizzes = [
         title: 'Data Structures',
         description: 'Qestions on Arrays, LinkedList, Stacks, Queues, Graphs',
         questions: dataStructures,
-        time: 1
+        time: 10
     },
     {
         id: 2,
         title: 'Algorithms',
-        description: 'Questions on sorting searching algorithms and dynamic programming greedy algorithms'
+        description: 'Questions on sorting searching algorithms and dynamic programming greedy algorithms',
+        questions: Algorithms,
+        time: 10
     },
     {
         id: 3,
         title: 'Computer Networks',
-        description: 'Questions on Basics of computer networks and client-server programming and encryption and decryption algorithms'
+        description: 'Questions on Basics of computer networks and client-server programming and encryption and decryption algorithms',
+        questions: ComputerNetworks,
+        time: 10
     }
 ]
 
