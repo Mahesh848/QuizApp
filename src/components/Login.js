@@ -5,6 +5,9 @@ import {matchUser} from '../api/userApi'
 class Login extends React.Component {
     constructor(props) {
         super(props)
+        if (localStorage.getItem("user") !== null) {
+            this.props.history.push("/home");
+        }
         this.state = {
             email: '',
             password: '',
@@ -22,6 +25,7 @@ class Login extends React.Component {
     handleSubmit(event) {
         event.preventDefault()
         if (matchUser(this.state.email, this.state.password) === true) {
+            localStorage.setItem("user", this.state.email)
             this.props.history.push("/home");
         } else {
             this.setState({areWrongCreds: true})

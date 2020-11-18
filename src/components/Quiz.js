@@ -10,6 +10,11 @@ import {Link} from 'react-router-dom'
 class Quiz extends React.Component {
     constructor(props) {
         super(props)
+
+        if (localStorage.getItem("user") === null) {
+            this.props.history.push("/login");
+        }
+
         let quiz = getQuiz(parseInt(this.props.match.params.id))[0]
         let time = this.convertMinsToTime(quiz.time)
 
