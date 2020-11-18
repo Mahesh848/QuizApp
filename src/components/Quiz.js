@@ -50,9 +50,7 @@ class Quiz extends React.Component {
 
     setQuestion(id) {
         let question = this.state.quiz.questions[id]
-        this.setState({currentQuestionId: id, currentQuestion: question}, () => {
-            console.log(this.state)
-        })
+        this.setState({currentQuestionId: id, currentQuestion: question})
     }
 
     convertMinsToTime(minutes) {

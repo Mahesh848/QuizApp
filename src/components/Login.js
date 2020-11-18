@@ -1,5 +1,5 @@
 import React from 'react'
-import {Form, Button} from 'react-bootstrap'
+import {Form, Button, Alert} from 'react-bootstrap'
 import {matchUser} from '../api/userApi'
 
 class Login extends React.Component {
@@ -7,7 +7,8 @@ class Login extends React.Component {
         super(props)
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            areWrongCreds: false
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -20,8 +21,10 @@ class Login extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        if (matchUser(this.state.email, this.state.password)) {
+        if (matchUser(this.state.email, this.state.password) === true) {
             this.props.history.push("/home");
+        } else {
+            this.setState({areWrongCreds: true})
         }
     }
 
@@ -41,6 +44,7 @@ class Login extends React.Component {
                         Submit
                     </Button>
                 </Form>
+                {this.state.areWrongCreds && <Alert className="alert-message" variant="danger">Wrong Credintials</Alert>}
             </div>
         )
     }
