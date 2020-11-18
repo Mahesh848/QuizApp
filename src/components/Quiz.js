@@ -152,6 +152,8 @@ class Quiz extends React.Component {
 
     submitQuiz() {
         this.setState({clickedSubmtQuiz: true})
+        clearInterval(this.timer)
+        this.setState({timeLeft: null})
     }
 
     render() {

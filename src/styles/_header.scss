@@ -30,8 +30,11 @@
     padding: 15px;
     display: flex;
 
-    .timer {
+    .name-timer {
         margin-left: 70%;
-        color: purple;
+        align-content: center;
+        .timer {
+            color: purple;
+        }
     }
 }
