@@ -6,7 +6,7 @@ class Login extends React.Component {
     constructor(props) {
         super(props)
         if (localStorage.getItem("user") !== null) {
-            this.props.history.push("/home");
+            this.props.history.push("/QuizApp/home");
         }
         this.state = {
             email: '',
@@ -26,7 +26,7 @@ class Login extends React.Component {
         event.preventDefault()
         if (matchUser(this.state.email, this.state.password) === true) {
             localStorage.setItem("user", this.state.email)
-            this.props.history.push("/home");
+            this.props.history.push("/QuizApp/home");
         } else {
             this.setState({areWrongCreds: true})
         }

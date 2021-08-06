@@ -12,7 +12,7 @@ class Quiz extends React.Component {
         super(props)
 
         if (localStorage.getItem("user") === null) {
-            this.props.history.push("/login");
+            this.props.history.push("/QuizApp/login");
         }
 
         let quiz = getQuiz(parseInt(this.props.match.params.id))[0]
@@ -185,7 +185,7 @@ class Quiz extends React.Component {
                 </div> : 
                 <div className="quiz-end">
                     <h1>Your Score: {" " + this.calculateScore()}</h1>
-                    <Link to="/home">Go To DashBoard</Link>
+                    <Link to="/QuizApp/home">Go To DashBoard</Link>
                 </div>}
             </div>
         )

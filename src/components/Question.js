@@ -16,7 +16,7 @@ function Question(props) {
                                 label={option}
                                 value={index}
                                 name={"question" + props.question.id}
-                                checked={props.question.responses[props.question.id] === index}
+                                checked={props.question.responses[props.question.id] == index}
                                 onChange={props.question.onSelectFn} />
                         })}
                     </Col>

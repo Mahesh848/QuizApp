@@ -5,6 +5,9 @@ import {saveUser} from '../api/userApi'
 class Signup extends React.Component {
     constructor(props) {
         super(props)
+        if (localStorage.getItem("user") !== null) {
+            this.props.history.push("/QuizApp/home");
+        }
         this.state = {
             firstname: '',
             lastname: '',
@@ -23,6 +26,7 @@ class Signup extends React.Component {
     handleSubmit(event) {
         event.preventDefault()
         saveUser(this.state)
+        this.props.history.push("/QuizApp/login");
     }
 
     render() {

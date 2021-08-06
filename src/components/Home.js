@@ -7,7 +7,7 @@ class Home extends React.Component {
     constructor(props) {
         super(props)
         if (localStorage.getItem("user") === null) {
-            this.props.history.push("/login");
+            this.props.history.push("/QuizApp/login");
         }
         this.state = {
             quizzes: getQuizzes()
@@ -17,12 +17,12 @@ class Home extends React.Component {
     }
 
     handleClick = (id) => {
-        this.props.history.push(`/quiz/${id}`)
+        this.props.history.push(`/QuizApp/quiz/${id}`)
     }
 
     logout = () => {
         localStorage.clear()
-        this.props.history.push('/login')
+        this.props.history.push('/QuizApp/login')
     }
 
     render() {

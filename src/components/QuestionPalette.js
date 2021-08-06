@@ -2,11 +2,6 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 
 function QuestionPalette(props) {
-    let printBreak = (index) => {
-        if (index % 3 === 0) {
-            return <br/>
-        }
-    }
     return (
         <div className="question-palettee">
             {
